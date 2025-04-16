@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projet RO</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background-color: #f6fae0; /* Background color */
+        }
+
+        .container {
+            text-align: center;
+            background-color: rgba(255, 255, 255, 1);
+            border-radius: 20px; /* Smooth rounded corners */
+            padding: 40px; /* Spacious padding */
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3); /* Enhanced shadow */
+            position: relative;
+            z-index: 10; /* Ensures it's above the trails */
+            width: 80%; /* Responsive width */
+            max-width: 600px; /* Limit width for large screens */
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        button {
+            background-color: #007BFF;
+            border: none;
+            color: white;
+            padding: 15px 20px;
+            margin: 10px;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #555;
+        }
+
+        .result {
+            font-weight: bold;
+            color: #28a745;
+        }
+
+        /* Style for the cursor trail */
+        .trail {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            animation: shrink-and-fade 1s forwards;
+        }
+
+        /* Animation for the trail */
+        @keyframes shrink-and-fade {
+            0% {
+                width: 2px;
+                height: 2px;
+                opacity: 0;
+            }
+            10% {
+                width: 20px;
+                height: 20px;
+                opacity: 0.7;
+            }
+            100% {
+                width: 2px;
+                height: 2px;
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="gg">
+        <h1>Projet RO</h1>
+        <div style="display: flex; width: 100%; gap: 10px;">
+            <button style="flex: 1; text-align: center;" onclick="navigateTo('/PL1')">Blending</button>
+            <button style="flex: 1; text-align: center;" onclick="navigateTo('/PL2')">Graph Coloring</button>
+            <button style="flex: 1; text-align: center;" onclick="navigateTo('/PL3')">Inventory Optimization</button>
+        </div>
+        
+        
+        {% if error %}
+            <p>{{ error }}</p>
+        {% endif %}
+        {% if result %}
+            <p class="result">{{ result }}</p>
+        {% endif %}
+    </div>
+
+    <script>
+        function navigateTo(url) {
+            window.location.href = url;
+        }
+
+        document.addEventListener('mousemove', (e) => {
+            const trail = document.createElement('div');
+            trail.className = 'trail';
+
+            // Position the trail at the mouse location
+            trail.style.left = `${e.pageX}px`;
+            trail.style.top = `${e.pageY}px`;
+
+            // Generate a dynamic color based on cursor position
+            const red = Math.floor((e.clientX / window.innerWidth) * 255);
+            const blue = 255 - red;
+            trail.style.backgroundColor = `rgba(${red}, 0, ${blue}, 0.6)`;
+
+            // Append the trail to the body
+            document.body.appendChild(trail);
+
+            // Remove the trail after the animation ends
+            trail.addEventListener('animationend', () => {
+                trail.remove();
+            });
+        });
+    </script>
+</body>
+</html>

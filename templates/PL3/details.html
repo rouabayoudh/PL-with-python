@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Inventory Optimization - Input Details</title>
+</head>
+
+<body>
+    <button id="gg" onclick="window.location.href = '/'">Home</button>
+    <div class="flex-container">
+        <div class="container">
+            <h1>Step 3: Provide Input Details</h1>
+
+            {% if error %}
+            <div class="error">{{ error }}</div>
+            {% endif %}
+
+            <form method="POST" onsubmit="return validateForm()">
+                {% for p in range(products) %}
+                <div class="product-section">
+                    <h2>{{ product_names[p] }}</h2>
+
+                    <h3>Demands</h3>
+                    <div class="demand-grid">
+                        {% for t in range(periods) %}
+                        <div class="form-group">
+                            <label for="demand_{{ p }}_{{ t }}">Period {{ t + 1 }}:</label>
+                            <input type="number" id="demand_{{ p }}_{{ t }}" name="demand_{{ p }}_{{ t }}" step="any"
+                                min="0" required>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="form-group">
+                        <label for="holding_cost_{{ p }}">Holding Cost:</label>
+                        <input type="number" id="holding_cost_{{ p }}" name="holding_cost_{{ p }}" step="any" min="0"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ordering_cost_{{ p }}">Ordering Cost:</label>
+                        <input type="number" id="ordering_cost_{{ p }}" name="ordering_cost_{{ p }}" step="any" min="0"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="setup_cost_{{ p }}">Setup Cost:</label>
+                        <input type="number" id="setup_cost_{{ p }}" name="setup_cost_{{ p }}" step="any" min="0"
+                            required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="capacity_{{ p }}">Capacity:</label>
+                        <input type="number" id="capacity_{{ p }}" name="capacity_{{ p }}" step="any" min="0" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="expiration_{{ p }}">Expiration Period (in days):</label>
+                        <input type="number" id="expiration_{{ p }}" name="expiration_{{ p }}" min="0" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="initial_inventory_{{ p }}">Initial Inventory:</label>
+                        <input type="number" id="initial_inventory_{{ p }}" name="initial_inventory_{{ p }}" step="1" min="0"
+                            required>
+                    </div>
+                </div>
+                {% endfor %}
+
+                <div class="product-section">
+                    <h2>Global Settings</h2>
+                    <div class="form-group">
+                        <label for="shared_capacity">Shared Capacity (Optional):</label>
+                        <input type="number" id="shared_capacity" name="shared_capacity" min="0" step="any">
+                    </div>
+                </div>
+
+                <button type="submit">Optimize</button>
+                <button type="button" onclick=gg()>Values</button>
+            </form>
+        </div>
+    </div>
+</body>
+<script>
+
+function gg() {
+    // e.preventDefault(); 
+    // Fill demands for each product and period
+    // Product 0
+    document.querySelector("#demand_0_0").value = "10";
+    document.querySelector("#demand_0_1").value = "20";
+    document.querySelector("#demand_0_2").value = "15";
+    document.querySelector("#demand_0_3").value = "7";
+    
+    // Product 1
+    document.querySelector("#demand_1_0").value = "30";
+    document.querySelector("#demand_1_1").value = "45";
+    document.querySelector("#demand_1_2").value = "20";
+    document.querySelector("#demand_1_3").value = "15";
+    
+    // Product 2
+    document.querySelector("#demand_2_0").value = "19";
+    document.querySelector("#demand_2_1").value = "14";
+    document.querySelector("#demand_2_2").value = "20";
+    document.querySelector("#demand_2_3").value = "8";
+    
+    // Fill costs and constraints for each product
+    // Holding costs
+    document.querySelector("#holding_cost_0").value = "2";
+    document.querySelector("#holding_cost_1").value = "3";
+    document.querySelector("#holding_cost_2").value = "2";
+    
+    // Ordering costs
+    document.querySelector("#ordering_cost_0").value = "3";
+    document.querySelector("#ordering_cost_1").value = "4";
+    document.querySelector("#ordering_cost_2").value = "3";
+    
+    // Setup costs
+    document.querySelector("#setup_cost_0").value = "100";
+    document.querySelector("#setup_cost_1").value = "120";
+    document.querySelector("#setup_cost_2").value = "110";
+    
+    // Capacities
+    document.querySelector("#capacity_0").value = "150";
+    document.querySelector("#capacity_1").value = "160";
+    document.querySelector("#capacity_2").value = "70";
+    
+    // Expiration periods
+    document.querySelector("#expiration_0").value = "1";
+    document.querySelector("#expiration_1").value = "1";
+    document.querySelector("#expiration_2").value = "1";
+    
+    // Initial inventory
+    document.querySelector("#initial_inventory_0").value = "5";
+    document.querySelector("#initial_inventory_1").value = "10";
+    document.querySelector("#initial_inventory_2").value = "20";
+    
+    // Shared capacity
+    document.querySelector("#shared_capacity").value = "150";
+}
+
+    document.addEventListener('mousemove', (e) => {
+        const trail = document.createElement('div');
+        trail.className = 'trail';
+
+        // Position the trail at the mouse location
+        trail.style.left = `${e.pageX}px`;
+        trail.style.top = `${e.pageY}px`;
+
+        // Generate a dynamic color based on cursor position
+        const red = Math.floor((e.clientX / window.innerWidth) * 255);
+        const blue = 255 - red;
+        trail.style.backgroundColor = `rgba(${red}, 0, ${blue}, 0.6)`;
+
+        // Append the trail to the body
+        document.body.appendChild(trail);
+
+        // Remove the trail after the animation ends
+        trail.addEventListener('animationend', () => {
+            trail.remove();
+        });
+    });
+</script>
+</html>

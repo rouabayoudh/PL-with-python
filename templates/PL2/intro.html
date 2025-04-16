@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Graph Coloring Problem</title>
+    <style>
+        body {
+            justify-content: center;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+
+        .flex-container {
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px;
+            width: 60%;
+            padding: 30px;
+        }
+    </style>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+<body>
+    <button id="gg" onclick="window.location.href = '/'">Home</button>
+
+    <div class="flex-container" style="z-index: 7;">
+        <div class="a">
+            <h1>The Graph Coloring Problem</h1>
+            <a href="https://en.wikipedia.org/wiki/Graph_coloring" target="_blank">Learn more about Graph Coloring</a>
+            <p>
+                The <strong>Graph Coloring Problem</strong> involves assigning colors to vertices of a graph such that no adjacent vertices share the same color. This classical optimization problem has numerous practical applications and is solved using Integer Linear Programming techniques.
+            </p>
+
+            <h2>Real-World Applications</h2>
+            
+            <h3>1. Scheduling and Resource Allocation</h3>
+            <ul>
+                <li><strong>Exam Timetabling:</strong> Scheduling exams so that no student has two exams at the same time. Each course is a vertex, and edges connect courses with common students.</li>
+            </ul>
+
+            <h3>2. Telecommunications</h3>
+            <ul>
+                <li><strong>Frequency Assignment:</strong> Allocating radio frequencies to transmitters while minimizing interference. Each transmitter is a vertex, and edges connect transmitters that could interfere.</li>
+            </ul>
+
+            <h3>3. Register Allocation in Compilers</h3>
+            <ul>
+                <li><strong>CPU Register Assignment:</strong> Assigning variables to CPU registers during program compilation. Variables are vertices, and edges connect variables that are needed at the same time.</li>
+            </ul>
+
+                       <h2>Mathematical Formulation</h2>
+            
+            <h3>1. Sets and Parameters</h3>
+            <ul>
+                <li>Set of vertices: \( V = \{1, 2, \dots, n\} \)</li>
+                <li>Maximum number of colors: \( K = \{1, 2, \dots, n\} \) (worst case)</li>
+                <li>Set of edges: \( E = \{(i, j) : \text{vertices } i \text{ and } j \text{ are adjacent}\} \)</li>
+            </ul>
+
+            <h3>2. Decision Variables</h3>
+            <p>Primary variables for vertex coloring:</p>
+            \[
+            x_{vc} = \begin{cases}
+            1 & \text{if vertex } v \text{ is assigned color } c \\
+            0 & \text{otherwise}
+            \end{cases} \quad \forall v \in V, c \in K
+            \]
+            
+            <p>Color usage tracking variables:</p>
+            \[
+            y_c = \begin{cases}
+            1 & \text{if color } c \text{ is used} \\
+            0 & \text{otherwise}
+            \end{cases} \quad \forall c \in K
+            \]
+
+            <h3>3. Objective Function</h3>
+            <p>Minimize the number of colors used:</p>
+            \[ \text{Minimize} \sum_{c \in K} y_c \]
+
+            <h3>4. Constraints</h3>
+            <p><strong>One color per vertex:</strong></p>
+            \[ \sum_{c \in K} x_{vc} = 1 \quad \forall v \in V \]
+            
+            <p><strong>Adjacent vertices must have different colors and color usage tracking:</strong></p>
+            \[ x_{uc} + x_{vc} \leq y_c \quad \forall (u,v) \in E, \forall c \in K \]
+            
+            <h2>Implementation Notes</h2>
+            <p>
+                This formulation is implemented using the Gurobi optimization solver, which:
+            </p>
+            <ul>
+                <li>Creates binary decision variables \(x_{vc}\) for vertex-color assignments</li>
+                <li>Creates binary variables \(y_c\) to track which colors are used</li>
+                <li>Implements all constraints using linear inequalities</li>
+                <li>Minimizes the total number of colors used in the solution</li>
+            </ul>
+
+            <button onclick="window.location.href = '/PL2_start'">Continue to Graph Coloring Implementation</button>
+        </div>
+    </div>
+</body>
+<script>
+    function navigateTo(url) {
+        window.location.href = url;
+    }
+
+    document.addEventListener('mousemove', (e) => {
+        const trail = document.createElement('div');
+        trail.className = 'trail';
+
+        // Position the trail at the mouse location
+        trail.style.left = `${e.pageX}px`;
+        trail.style.top = `${e.pageY}px`;
+
+        // Generate a dynamic color based on cursor position
+        const red = Math.floor((e.clientX / window.innerWidth) * 255);
+        const blue = 255 - red;
+        trail.style.backgroundColor = `rgba(${red}, 0, ${blue}, 0.6)`;
+
+        // Append the trail to the body
+        document.body.appendChild(trail);
+
+        // Remove the trail after the animation ends
+        trail.addEventListener('animationend', () => {
+            trail.remove();
+        });
+    });
+</script>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PL1 Setup</title>
+    <link rel="stylesheet" href="static/styles.css">
+</head>
+
+<body>
+    <button id="gg" onclick="navigateTo('/')">Home</button>
+    <div class="flex-container">
+        <div class="container">
+            <h1>Input Ingredient Details</h1>
+            <form method="post">
+                {% for i in range(num_ingredients) %}
+                <div class="ingredient-section">
+                    <h3>Ingredient {{ i + 1 }}</h3>
+                    <label>Ingredient Name:</label>
+                    <input type="text" name="ingredient_name_{{ i }}" required><br>
+
+                    <label>Cost per Unit:</label>
+                    <input type="number" step="any" name="cost_per_unit_{{ i }}" min="0" required><br>
+
+                    <label>Available Quantity:</label>
+                    <input type="number" step="any" name="available_quantity_{{ i }}" min="0" required><br>
+                </div>
+                {% endfor %}
+
+                <div class="form-group" style="display: flex;justify-content: center;gap: 0px;">
+
+                    <button onclick="navigateTo('/PL1')">Previous</button>
+                    <button type="submit">Next</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        function navigateTo(url) {
+            window.location.href = url;
+        }
+        document.addEventListener('mousemove', (e) => {
+            const trail = document.createElement('div');
+            trail.className = 'trail';
+
+            // Position the trail at the mouse location
+            trail.style.left = `${e.pageX}px`;
+            trail.style.top = `${e.pageY}px`;
+
+            // Generate a dynamic color based on cursor position
+            const red = Math.floor((e.clientX / window.innerWidth) * 255);
+            const blue = 255 - red;
+            trail.style.backgroundColor = `rgba(${red}, 0, ${blue}, 0.6)`;
+
+            // Append the trail to the body
+            document.body.appendChild(trail);
+
+            // Remove the trail after the animation ends
+            trail.addEventListener('animationend', () => {
+                trail.remove();
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Blending Problem</title>
+    <style>
+        body {
+            justify-content: center;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+
+        .flex-container {
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px;
+            width: 60%;
+            padding: 30px;
+        }
+    </style>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+
+<body>
+    <button id="gg" onclick="window.location.href = '/'">Home</button>
+
+    <div class="flex-container" style="z-index: 2;">
+        <div class="a">
+            <h1>The Blending Problem</h1>
+            <p>
+                The <strong>Blending Problem</strong> involves determining the optimal mix of ingredients to create a product that meets specific property requirements while minimizing cost. This optimization problem is solved using Linear Programming techniques.
+            </p>
+
+            <h2>Real-World Applications</h2>
+            
+            <h3>1. Manufacturing and Production</h3>
+            <ul>
+                <li><strong>Metal Alloys:</strong> Mixing different metals to achieve specific strength and durability properties.</li>
+                            </ul>
+
+            <h3>2. Food and Beverage Industry</h3>
+            <ul>
+                <li><strong>Food Manufacturing:</strong> Creating recipes that meet nutritional requirements.</li>
+            </ul>
+
+            <h3>3. Petroleum Industry</h3>
+            <ul>
+                <li><strong>Gasoline Blending:</strong> Mixing different grades of fuel to meet octane requirements.</li>
+            </ul>
+
+            <h3>4. Chemical Industry</h3>
+            <ul>
+                <li><strong>Pharmaceutical Manufacturing:</strong> Blending active ingredients and excipients.</li>
+            </ul>
+
+            <h2>Mathematical Formulation</h2>
+            
+            <h3>1. Sets and Parameters</h3>
+            <ul>
+                <li>Set of ingredients: \( I = \{1, 2, \dots, n\} \)</li>
+                <li>Set of properties: \( P = \{1, 2, \dots, m\} \)</li>
+                <li>Cost per unit of ingredient i: \( c_i \)</li>
+                <li>Available quantity of ingredient i: \( a_i \)</li>
+                <li>Property p value for ingredient i: \( p_{i,p} \)</li>
+                <li>Total required quantity: \( Q \)</li>
+                <li>Property bounds: \( [l_p, u_p] \) for each property \( p \)</li>
+            </ul>
+
+            <h3>2. Decision Variables</h3>
+            <p>Amount of each ingredient to use:</p>
+            \[
+            x_i = \text{quantity of ingredient } i \text{ to use} \quad \forall i \in I
+            \]
+
+            <h3>3. Objective Function</h3>
+            <p>Minimize total cost:</p>
+            \[ \text{Minimize} \sum_{i \in I} c_i x_i \]
+
+            <h3>4. Constraints</h3>
+            <p><strong>Total quantity requirement:</strong></p>
+            \[ \sum_{i \in I} x_i = Q \]
+            
+            <p><strong>Availability constraints:</strong></p>
+            \[ x_i \leq a_i \quad \forall i \in I \]
+            
+            <p><strong>Property bounds:</strong></p>
+            \[ l_p Q \leq \sum_{i \in I} p_{i,p} x_i \leq u_p Q \quad \forall p \in P \]
+            
+            <p><strong>Non-negativity:</strong></p>
+            \[ x_i \geq 0 \quad \forall i \in I \]
+            
+            <h2>Implementation Notes</h2>
+            <p>
+                This formulation is implemented using the Gurobi optimization solver, which:
+            </p>
+            <ul>
+                <li>Creates continuous variables \(x_i\) for ingredient quantities</li>
+                <li>Implements the cost minimization objective</li>
+                <li>Ensures all quantity and property constraints are satisfied</li>
+                <li>Handles bounds on both individual ingredients and resulting properties</li>
+            </ul>
+
+            <button onclick="window.location.href = '/PL1_start'">Continue to Blending Problem Implementation</button>
+        </div>
+    </div>
+</body>
+<script>
+    function navigateTo(url) {
+        window.location.href = url;
+    }
+
+    document.addEventListener('mousemove', (e) => {
+        const trail = document.createElement('div');
+        trail.className = 'trail';
+
+        // Position the trail at the mouse location
+        trail.style.left = `${e.pageX}px`;
+        trail.style.top = `${e.pageY}px`;
+
+        // Generate a dynamic color based on cursor position
+        const red = Math.floor((e.clientX / window.innerWidth) * 255);
+        const blue = 255 - red;
+        trail.style.backgroundColor = `rgba(${red}, 0, ${blue}, 0.6)`;
+
+        // Append the trail to the body
+        document.body.appendChild(trail);
+
+        // Remove the trail after the animation ends
+        trail.addEventListener('animationend', () => {
+            trail.remove();
+        });
+    });
+</script>
+</html>

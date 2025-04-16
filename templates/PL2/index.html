@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Graph Coloring Problem</title>
+</head>
+
+<body>
+    <button id="gg" onclick="window.location.href = '/'">Home</button>
+    <div class="flex-container">
+        <div class="container">
+            <h1>Graph Coloring Problem</h1>
+            <form method="post">
+                <label for="num_vertices">Number of Vertices:</label>
+                <input type="number" id="num_vertices" name="num_vertices" required>
+
+                <label for="num_edges">Number of Edges:</label>
+                <input type="number" id="num_edges" name="num_edges" required>
+
+                <div id="edges">
+                    <h3>Edges</h3>
+                    <p>Provide edges as pairs (e.g., "0 1").</p>
+                </div>
+
+                <button type="submit">Solve</button>
+            </form>
+            {% if error %}
+            <p class="alert">{{ error }}</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <script>
+        const edgesContainer = document.getElementById("edges");
+        const numEdgesInput = document.getElementById("num_edges");
+
+        numEdgesInput.addEventListener("input", function () {
+            edgesContainer.innerHTML = "<h3>Edges</h3><p>Provide edges as pairs (e.g., \"0 1\").</p>";
+            const numEdges = parseInt(this.value) || 0;
+
+            for (let i = 0; i < numEdges; i++) {
+                edgesContainer.innerHTML += `
+                    <label for="edge_${i}">Edge ${i + 1}:</label>
+                    <input type="text" id="edge_${i}" name="edge_${i}" required>
+                `;
+            }
+        });
+        document.addEventListener('mousemove', (e) => {
+            const trail = document.createElement('div');
+            trail.className = 'trail';
+
+            // Position the trail at the mouse location
+            trail.style.left = `${e.pageX}px`;
+            trail.style.top = `${e.pageY}px`;
+
+            // Generate a dynamic color based on cursor position
+            const red = Math.floor((e.clientX / window.innerWidth) * 255);
+            const blue = 255 - red;
+            trail.style.backgroundColor = `rgba(${red}, 0, ${blue}, 0.6)`;
+
+            // Append the trail to the body
+            document.body.appendChild(trail);
+
+            // Remove the trail after the animation ends
+            trail.addEventListener('animationend', () => {
+                trail.remove();
+            });
+        });
+    </script>
+</body>
+
+</html>

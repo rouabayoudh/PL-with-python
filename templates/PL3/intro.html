@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!DOCTYPE html>
+    <html lang="en">
+    <!-- [Previous head section remains the same] -->
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+        <title>Multi-Product Inventory Optimization</title>
+        <style>
+            body {
+                justify-content: center;
+                text-align: center;
+                font-family: Arial, sans-serif;
+            }
+    
+            .flex-container {
+                background-color: #fff;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                text-align: left;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin: 20px;
+                width: 60%;
+                padding: 30px;
+            }
+        </style>
+        <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+        <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    </head>
+    
+    <body>
+        <button id="gg" onclick="window.location.href = '/'">Home</button>
+    
+        <div class="flex-container" style="z-index: 5;">
+            <div class="a">
+                <h1>Multi-Product Inventory Optimization</h1>
+                <p>
+                    The <strong>Multi-Product Inventory Optimization Problem</strong> involves determining optimal ordering strategies for multiple products over multiple time periods, with special consideration for product age tracking and expiration constraints.
+                </p>
+    
+                <!-- [Previous applications section remains the same] -->
+                <h2>Real-World Applications</h2>
+                
+                <h3>1. Retail and Distribution</h3>
+                <ul>
+                    <li><strong>Supermarket Chains:</strong> Managing perishable goods inventory with FIFO (First-In-First-Out) policies.</li>
+                </ul>
+    
+                <h3>2. Pharmaceutical Industry</h3>
+                <ul>
+                    <li><strong>Medical Supplies:</strong> Tracking medication expiration dates and managing inventory age.</li>
+                </ul>
+    
+                <h3>3. Food and Beverage Industry</h3>
+                <ul>
+                    <li><strong>Food Distribution:</strong> Managing perishable inventory with strict expiration tracking.</li>
+                </ul>
+    
+                <h3>4. Manufacturing</h3>
+                <ul>
+                    <li><strong>Raw Materials:</strong> Optimizing storage with age-sensitive components.</li>
+                </ul>
+    
+                <h2>Mathematical Formulation</h2>
+                
+                <h3>1. Sets and Indices</h3>
+                <ul>
+                    <li>Time periods: \( T = \{0, \ldots, |T|-1\} \)</li>
+                    <li>Products: \( P = \{0, \ldots, |P|-1\} \)</li>
+                    <li>Age categories: \( A_p = \{0, \ldots, e_p-1\} \) for product \(p\)</li>
+                </ul>
+    
+                <h3>2. Parameters</h3>
+                <ul>
+                    <li>Demand: \( d_{p,t} \) for product \(p\) in period \(t\)</li>
+                    <li>Holding cost: \( h_p \) for product \(p\)</li>
+                    <li>Ordering cost: \( c_p \) per unit of product \(p\)</li>
+                    <li>Setup cost: \( s_p \) for ordering product \(p\)</li>
+                    <li>Capacity: \( Cap_p \) maximum storage for product \(p\)</li>
+                    <li>Shared capacity: \( SCap \) total warehouse capacity</li>
+                    <li>Expiration periods: \( e_p \) shelf life of product \(p\)</li>
+                    <li>Initial inventory: \( I^0_p \) starting inventory for product \(p\)</li>
+                </ul>
+    
+                <h3>3. Decision Variables</h3>
+                \[
+                x_{p,t} = \text{order quantity of product } p \text{ in period } t
+                \]
+                \[
+                y_{p,t} = \begin{cases}
+                1 & \text{if an order is placed for product } p \text{ in period } t \\
+                0 & \text{otherwise}
+                \end{cases}
+                \]
+    
+                <h3>4. Derived Variables</h3>
+                <p>Inventory level for product p of age a at the end of period t:</p>
+                \[
+                I_{p,t,a} = \begin{cases}
+                x_{p,t} & \text{if } a = 0 \\
+                I_{p,t-1,a-1} & \text{if } a > 0
+                \end{cases}
+                \]
+    
+                <h3>5. Objective Function</h3>
+                <p>Minimize total costs:</p>
+                \[ \text{Minimize} \sum_{p \in P} \sum_{t \in T} (c_p x_{p,t} + s_p y_{p,t} + h_p \sum_{a \in A_p} I_{p,t,a}) \]
+    
+                <h3>6. Constraints</h3>
+                <p><strong>Initial Period:</strong></p>
+                \[ I_{p,0,0} = I^0_p + x_{p,0} - d_{p,0} \quad \forall p \in P \]
+                \[ I_{p,0,a} = 0 \quad \forall p \in P, a > 0 \]
+                
+                <p><strong>Inventory Aging:</strong></p>
+                \[ I_{p,t,0} = x_{p,t} \quad \forall p \in P, t > 0 \]
+                \[ I_{p,t,a} = I_{p,t-1,a-1} \quad \forall p \in P, t > 0, a > 0 \]
+    
+                <p><strong>Demand Satisfaction:</strong></p>
+                \[ \sum_{a \in A_p} I_{p,t-1,a} + x_{p,t} \geq d_{p,t} \quad \forall p \in P, t > 0 \]
+    
+                
+                <p><strong>Individual Capacity:</strong></p>
+                \[ \sum_{a \in A_p} I_{p,t,a} \leq Cap_p \quad \forall p \in P, t \in T \]
+    
+                <p><strong>Shared Capacity:</strong></p>
+                \[ \sum_{p \in P} \sum_{a \in A_p} I_{p,t,a} \leq SCap \quad \forall t \in T \]
+    
+
+                <p><strong>Non-negativity:</strong></p>
+                \[ x_{p,t} \geq 0 \quad \forall p \in P, t \in T \]
+                \[ I_{p,t,a} \geq 0 \quad \forall p \in P, t \in T, a \in A_p \]
+                
+                <h2>Implementation Notes</h2>
+                <p>
+                    This formulation is implemented using the Gurobi optimization solver, which:
+                </p>
+                <ul>
+                    <li>Uses continuous variables for order quantities (\(x_{p,t}\))</li>
+                    <li>Uses binary variables (\(y_{p,t}\)) for setup decisions</li>
+                    <li>Calculates age-tracked inventory levels (\(I_{p,t,a}\)) based on orders and previous inventory</li>
+                    <li>Implements FIFO inventory management policies</li>
+                    <li>Handles both individual and shared storage limitations</li>
+                    <li>Considers setup costs and demand satisfaction requirements</li>
+                    <li>Tracks inventory age and enforces expiration constraints</li>
+                </ul>
+    
+                <button onclick="window.location.href = '/PL3_start'">Continue to Implementation</button>
+            </div>
+        </div>
+    </body>
+    <script>
+        function navigateTo(url) {
+            window.location.href = url;
+        }
+    
+        document.addEventListener('mousemove', (e) => {
+            const trail = document.createElement('div');
+            trail.className = 'trail';
+    
+            trail.style.left = `${e.pageX}px`;
+            trail.style.top = `${e.pageY}px`;
+    
+            const red = Math.floor((e.clientX / window.innerWidth) * 255);
+            const blue = 255 - red;
+            trail.style.backgroundColor = `rgba(${red}, 0, ${blue}, 0.6)`;
+    
+            document.body.appendChild(trail);
+    
+            trail.addEventListener('animationend', () => {
+                trail.remove();
+            });
+        });
+    </script>
+    </html>

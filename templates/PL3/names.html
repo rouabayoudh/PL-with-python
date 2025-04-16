@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Optimization - Product Names</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+    <button id="gg" onclick="window.location.href = '/'">Home</button>
+    <div class="flex-container">
+        <div class="container">
+            <h1>Step 2: Enter Product Names</h1>
+            <form method="POST">
+                {% for i in range(1, products + 1) %}
+                <div class="form-group">
+                    <label for="product_name_{{ i }}">Product {{ i }} Name:</label>
+                    <input type="text" id="product_name_{{ i }}" name="product_name_{{ i }}" required>
+                </div>
+                {% endfor %}
+                <button type="submit">Next</button>
+                <button type="button" onclick=gg(event)>Values</button>
+
+            </form>
+        </div>
+    </div>
+</body>
+<script>
+    function gg(e) {
+        e.preventDefault();
+        document.querySelector("#product_name_1").value = "Product test 1";
+        document.querySelector("#product_name_2").value = "Product test 2";
+        document.querySelector("#product_name_3").value = "Product test 3";
+    }
+
+    document.addEventListener('mousemove', (e) => {
+        const trail = document.createElement('div');
+        trail.className = 'trail';
+
+        // Position the trail at the mouse location
+        trail.style.left = `${e.pageX}px`;
+        trail.style.top = `${e.pageY}px`;
+
+        // Generate a dynamic color based on cursor position
+        const red = Math.floor((e.clientX / window.innerWidth) * 255);
+        const blue = 255 - red;
+        trail.style.backgroundColor = `rgba(${red}, 0, ${blue}, 0.6)`;
+
+        // Append the trail to the body
+        document.body.appendChild(trail);
+
+        // Remove the trail after the animation ends
+        trail.addEventListener('animationend', () => {
+            trail.remove();
+        });
+    });
+</script>
+</html>

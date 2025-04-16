@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Optimization - Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+
+<body>
+    <button id="gg" onclick="window.location.href = '/'">Home</button>
+    <div class="flex-container">
+        <div class="container">
+            <h1>Optimization Results</h1>
+            <h2>Total Cost: {{ total_cost }}</h2>
+
+            <h3>Order Quantities</h3>
+            <div>
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>Period</th>
+                            {% for product_index in range(product_names | length) %}
+                            <th>{{ product_names[product_index] }}</th>
+                            {% endfor %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for period in range(4) %}  <!-- Assuming 4 periods from your previous data -->
+                        <tr>
+                            <td>{{ period }}</td>
+                            {% for product_index in range(product_names | length) %}
+                            <td>{{ order_quantities.get((product_index, period), 0) }}</td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+
+            <!-- <h3>Inventory Levels</h3>
+            <ul>
+                {% for (product, period), level in inventory_levels.items() %}
+                <li>{{ product_names[product] }}, Period {{ period }}: {{ level }}</li>
+                {% endfor %}
+            </ul> -->
+        </div>
+    </div>
+</body>
+<script>
+
+    document.addEventListener('mousemove', (e) => {
+        const trail = document.createElement('div');
+        trail.className = 'trail';
+
+        // Position the trail at the mouse location
+        trail.style.left = `${e.pageX}px`;
+        trail.style.top = `${e.pageY}px`;
+
+        // Generate a dynamic color based on cursor position
+        const red = Math.floor((e.clientX / window.innerWidth) * 255);
+        const blue = 255 - red;
+        trail.style.backgroundColor = `rgba(${red}, 0, ${blue}, 0.6)`;
+
+        // Append the trail to the body
+        document.body.appendChild(trail);
+
+        // Remove the trail after the animation ends
+        trail.addEventListener('animationend', () => {
+            trail.remove();
+        });
+    });
+</script>
+
+</html>

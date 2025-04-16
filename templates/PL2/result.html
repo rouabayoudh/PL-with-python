@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Graph Coloring Result</title>
+</head>
+
+<body>
+    <button id="gg" onclick="window.location.href = '/'">Home</button>
+    <div class="flex-container">
+        <div class="container">
+            <h1>Graph Coloring Result</h1>
+            <p>Number of colors used: <strong>{{ num_colors }}</strong></p>
+            <table>
+                <tr>
+                    <th>Vertex</th>
+                    <th>Color</th>
+                </tr>
+                <div class="graphdiv">
+                    <img src="{{ url_for('static', filename='/test.png') }}" alt="Graph" class="graph">
+                </div>
+                {% for vertex, color in solution.items() %}
+                <tr>
+                    <td>{{ vertex }}</td>
+                    <td>{{ color }}</td>
+                </tr>
+                {% endfor %}
+
+            </table>
+            <a href="{{ url_for('PL2') }}" class="button">Solve Another Graph</a>
+        </div>
+    </div>
+</body>
+<script>
+
+    document.addEventListener('mousemove', (e) => {
+        const trail = document.createElement('div');
+        trail.className = 'trail';
+
+        // Position the trail at the mouse location
+        trail.style.left = `${e.pageX}px`;
+        trail.style.top = `${e.pageY}px`;
+
+        // Generate a dynamic color based on cursor position
+        const red = Math.floor((e.clientX / window.innerWidth) * 255);
+        const blue = 255 - red;
+        trail.style.backgroundColor = `rgba(${red}, 0, ${blue}, 0.6)`;
+
+        // Append the trail to the body
+        document.body.appendChild(trail);
+
+        // Remove the trail after the animation ends
+        trail.addEventListener('animationend', () => {
+            trail.remove();
+        });
+    });
+</script>
+
+</html>

@@ -1,0 +1,205 @@
+body {
+  margin: 0;
+  font-family: "Arial", sans-serif;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Align to the top if there's extra space */
+  position: relative;
+  background-color: #f6fae0; /* Background color */
+  overflow-y: auto; /* Allow scrolling if content overflows vertically */
+}
+
+.container {
+  z-index: 10;
+  text-align: left;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  width: 500px;
+  overflow-y: auto; /* Enable scrolling inside the container */
+  margin: 20px;
+}
+
+.flex-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  border-radius: 8px; 
+}
+
+h1 {
+  font-size: 1.8rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+label {
+  font-size: 1rem;
+  color: #555;
+  margin-bottom: 8px;
+  display: block;
+}
+
+input {
+  width: 100%; /* Full width for input fields */
+  padding: 10px; /* Padding inside input */
+  margin-bottom: 15px; /* Space below input fields */
+  font-size: 1rem; /* Font size for input */
+  border: 1px solid #ccc; /* Border for input */
+  border-radius: 5px; /* Rounded corners for input */
+}
+
+input[type="number"],
+input[type="text"],
+button {
+  z-index: 10;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+
+button {
+  margin-left: 13px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  width: 100%;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+#gg {
+  position: absolute;
+  top: 5%;
+  width: 100px;
+  right: 90%;
+}
+
+form {
+  padding-right: 20px;
+}
+
+
+/* Styles mtaa PL2 */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background: #007bff;
+    color: white;
+}
+
+.alert {
+    background: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    margin-top: 20px;
+    border-radius: 4px;
+}
+
+.graphdiv
+{
+    display: flex;
+    justify-content: center;
+}
+
+#edges{
+    display: flex;
+    flex-direction: column;
+}
+
+/* Home page ig? */
+
+a.button {
+    display: block;
+    text-align: center;
+    background: #007bff;
+    color: white;
+    padding: 10px;
+    margin-top: 20px;
+    text-decoration: none;
+    border-radius: 4px;
+}
+
+a.button:hover {
+    background: #0056b3;
+}
+.trail {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  animation: shrink-and-fade 1s forwards;
+}
+
+/* Animation for the trail */
+@keyframes shrink-and-fade {
+  0% {
+      width: 2px;
+      height: 2px;
+      opacity: 0;
+  }
+  10% {
+      width: 20px;
+      height: 20px;
+      opacity: 0.7;
+  }
+  100% {
+      width: 2px;
+      height: 2px;
+      opacity: 0;
+  }
+}
+.trail {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  animation: shrink-and-fade 1s forwards;
+}
+
+/* Animation for the trail */
+@keyframes shrink-and-fade {
+  0% {
+      width: 2px;
+      height: 2px;
+      opacity: 0;
+  }
+  10% {
+      width: 20px;
+      height: 20px;
+      opacity: 0.7;
+  }
+  100% {
+      width: 2px;
+      height: 2px;
+      opacity: 0;
+  }
+}

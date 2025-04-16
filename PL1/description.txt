@@ -1,0 +1,50 @@
+Nombre d'ingrédients : 3
+Nombre de propriétés : 3
+Coût de l'ingrédient 1 (€) : 10
+Coût de l'ingrédient 2 (€) : 30.5
+Coût de l'ingrédient 3 (€) : 90
+Quantité disponible de l'ingrédient 1 (kg) : 1
+Quantité disponible de l'ingrédient 2 (kg) : 1
+Quantité disponible de l'ingrédient 3 (kg) : 1
+Contribution de l'ingrédient 1 à la propriété 1 : 0.38
+Contribution de l'ingrédient 2 à la propriété 1 : 0.001
+Contribution de l'ingrédient 3 à la propriété 1 : 0.002
+Contribution de l'ingrédient 1 à la propriété 2 : 0
+Contribution de l'ingrédient 2 à la propriété 2 : 0.09
+Contribution de l'ingrédient 3 à la propriété 2 : 0.5
+Contribution de l'ingrédient 1 à la propriété 3 : 0
+Contribution de l'ingrédient 2 à la propriété 3 : 0.02
+Contribution de l'ingrédient 3 à la propriété 3 : 0.08
+Valeur minimale de la propriété 1 : 0.008
+Valeur minimale de la propriété 2 : 0.22
+Valeur minimale de la propriété 3 : 0
+Valeur maximale de la propriété 1 : 0.012
+Valeur maximale de la propriété 2 : 1
+Valeur maximale de la propriété 3 : 0.05
+Quantité totale du mélange (kg) : 1
+Gurobi Optimizer version 12.0.0 build v12.0.0rc1 (win64 - Windows 11.0 (22621.2))
+
+CPU model: 11th Gen Intel(R) Core(TM) i5-11400H @ 2.70GHz, instruction set [SSE2|AVX|AVX2|AVX512]
+Thread count: 6 physical cores, 12 logical processors, using up to 12 threads
+
+Optimize a model with 7 rows, 3 columns and 17 nonzeros
+Model fingerprint: 0x1411302c
+Coefficient statistics:
+  Matrix range     [1e-03, 1e+00]
+  Objective range  [1e+01, 9e+01]
+  Bounds range     [0e+00, 0e+00]
+  RHS range        [8e-03, 1e+00]
+Presolve removed 7 rows and 3 columns
+Presolve time: 0.00s
+Presolve: All rows and columns removed
+Iteration    Objective       Primal Inf.    Dual Inf.      Time  
+       0    4.9156290e+01   0.000000e+00   0.000000e+00      0s  
+
+Solved in 0 iterations and 0.00 seconds (0.00 work units)        
+Optimal objective  4.915629020e+01
+
+Solution optimale trouvée :
+Ingrédient 1 : 0.03 kg
+Ingrédient 2 : 0.65 kg
+Ingrédient 3 : 0.32 kg
+Coût total : 49.16 €

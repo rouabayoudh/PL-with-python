@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Optimization - Step 1</title>
+    <link rel="stylesheet" href="static/styles.css">
+</head>
+
+<body>
+    <button id="gg" onclick="window.location.href = '/'">Home</button>
+    <div class="flex-container">
+        <div class="container">
+            <h1>Step 1: Define Problem Dimensions</h1>
+            <form method="POST">
+                <div class="form-group">
+                    <label for="periods">Number of Periods:</label>
+                    <input type="number" id="periods" name="periods" min="1" required>
+                </div>
+                <div class="form-group">
+                    <label for="products">Number of Products:</label>
+                    <input type="number" id="products" name="products" min="1" required>
+                </div>
+                <button type="submit">Next</button>
+                <button type="button" onclick=gg(event)>Values</button>
+
+            </form>
+        </div>
+    </div>
+</body>
+<script>
+
+    function gg(event) {
+        event.preventDefault();
+        document.querySelector('#periods').value = 4;
+        document.querySelector('#products').value = 3;
+    }
+
+    document.addEventListener('mousemove', (e) => {
+        const trail = document.createElement('div');
+        trail.className = 'trail';
+
+        // Position the trail at the mouse location
+        trail.style.left = `${e.pageX}px`;
+        trail.style.top = `${e.pageY}px`;
+
+        // Generate a dynamic color based on cursor position
+        const red = Math.floor((e.clientX / window.innerWidth) * 255);
+        const blue = 255 - red;
+        trail.style.backgroundColor = `rgba(${red}, 0, ${blue}, 0.6)`;
+
+        // Append the trail to the body
+        document.body.appendChild(trail);
+
+        // Remove the trail after the animation ends
+        trail.addEventListener('animationend', () => {
+            trail.remove();
+        });
+    });
+</script>
+</html>

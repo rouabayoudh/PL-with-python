@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Blending Problem Solution</title>
+    <link rel="stylesheet" href="static/styles.css">
+</head>
+
+<body>
+    <button id="gg" onclick="navigateTo('/')">Home</button>
+    <div class="flex-container">
+        <div class="container">
+            <h1>Blending Problem Solution</h1>
+
+            {% if result.status == 'Optimal Solution Found' %}
+            <div class="solution-section">
+                <h2>Ingredient Quantities</h2>
+                <ul>
+                    {% for ingredient, quantity in result.ingredient_quantities.items() %}
+                    <li>{{ ingredient }}: {{ "%.2f"|format(quantity) }}</li>
+                    {% endfor %}
+                </ul>
+
+                <h2>Total Cost</h2>
+                <p>{{ "%.2f"|format(result.total_cost) }}</p>
+            </div>
+
+            {% if result.constraints is defined %}
+            <div class="solution-section">
+                <h2>Constraints Satisfaction</h2>
+                <ul>
+                    {% for constraint, status in result.constraints.items() %}
+                    <li>{{ constraint }}: {{ "Satisfied" if status else "Violated" }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            {% else %}
+            <p class="error">No optimal solution found. Please check your input data.</p>
+            {% endif %}
+
+            <div class="form-group" style="display: flex;justify-content: center;gap: 0px;margin-right: 12px;">
+
+                <button onclick="navigateTo('/PL1')">Solve Another Problem</button>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    function navigateTo(url) {
+        window.location.href = url;
+    }
+    document.addEventListener('mousemove', (e) => {
+            const trail = document.createElement('div');
+            trail.className = 'trail';
+
+            // Position the trail at the mouse location
+            trail.style.left = `${e.pageX}px`;
+            trail.style.top = `${e.pageY}px`;
+
+            // Generate a dynamic color based on cursor position
+            const red = Math.floor((e.clientX / window.innerWidth) * 255);
+            const blue = 255 - red;
+            trail.style.backgroundColor = `rgba(${red}, 0, ${blue}, 0.6)`;
+
+            // Append the trail to the body
+            document.body.appendChild(trail);
+
+            // Remove the trail after the animation ends
+            trail.addEventListener('animationend', () => {
+                trail.remove();
+            });
+        });
+</script>
+
+</html>

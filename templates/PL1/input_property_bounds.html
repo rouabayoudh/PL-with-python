@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Property Bounds</title>
+    <link rel="stylesheet" href="static/styles.css">
+</head>
+
+<body>
+    <button id="gg" onclick="navigateTo('/')">Home</button>
+    <div class="flex-container">
+
+        <div class="container">
+            <h1>Set Property Bounds for Final Product</h1>
+            <form method="post">
+                <div class="property-section">
+                    <p>Total Quantity: {{ total_quantity }}</p>
+                    {% for prop in property_names %}
+                    <h3>{{ prop }} Bounds</h3>
+                    <label>Minimum (total quantity multiplier):</label>
+                    <input type="number" step="any" min="0" max="1" name="{{ prop }}_min" required><br>
+
+                    <label>Maximum (total quantity multiplier):</label>
+                    <input type="number" step="any" min="0" max="1" name="{{ prop }}_max" required><br>
+                    {% endfor %}
+
+                    <div class="form-group" style="display: flex;justify-content: center;gap: 0px;">
+
+                        <button onclick="navigateTo('/input_properties')">Previous</button>
+                        <button type="submit">Next</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+<script>
+    function navigateTo(url) {
+        window.location.href = url;
+    }
+    document.addEventListener('mousemove', (e) => {
+            const trail = document.createElement('div');
+            trail.className = 'trail';
+
+            // Position the trail at the mouse location
+            trail.style.left = `${e.pageX}px`;
+            trail.style.top = `${e.pageY}px`;
+
+            // Generate a dynamic color based on cursor position
+            const red = Math.floor((e.clientX / window.innerWidth) * 255);
+            const blue = 255 - red;
+            trail.style.backgroundColor = `rgba(${red}, 0, ${blue}, 0.6)`;
+
+            // Append the trail to the body
+            document.body.appendChild(trail);
+
+            // Remove the trail after the animation ends
+            trail.addEventListener('animationend', () => {
+                trail.remove();
+            });
+        });
+</script>
+
+</html>
